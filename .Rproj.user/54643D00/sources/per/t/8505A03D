@@ -1,0 +1,24 @@
+{
+    "id": "8505A03D",
+    "path": "~/Data Science/Tableau/utility-objects-private-households/utility-objects-data-prep.R",
+    "project_path": "utility-objects-data-prep.R",
+    "type": "r_source",
+    "hash": "2688827430",
+    "contents": "",
+    "dirty": false,
+    "created": 1645995549754.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1645993721,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1645993721,
+    "read_only": false,
+    "read_only_alternatives": []
+}
