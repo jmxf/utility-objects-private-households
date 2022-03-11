@@ -6,7 +6,7 @@ library(magrittr)
 #Wirtschaftsrechnungen): Deutschland, Stichtag,
 #Gebrauchsgüter
 
-#https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=2&levelid=1645826798909&levelid=1645826287561&step=1#abreadcrumb
+#https://www-genesis.destatis.de/genesis/online
 
 
 #I suspect there must be a difference between missing observations marked
@@ -24,7 +24,12 @@ stripped_data <- slice(full_data, 5:23) %>%
 #create list of column names
 #I am integrating the unit % into the column names, but not integrating the 1000 factor
 #for the column "Erfasste Haushalte" since I am transforming this column back to full size values
+#align abbreviations (since we are looking at the rate of households owning a certain
+#object, the object names do not contain meaningful grammatical plurals)
 name_list <- c("Snapshot Date", full_data[1,2:3], paste(full_data[3,4:73], "[%]", sep = " "))
+name_list <- name_list %>% 
+  gsub(pattern = "Personenkraftwagen", replacement = "Pkw") %>% 
+  gsub(pattern = "Krafträder", replacement = "Kraftrad")
 
 #clean table with column names
 final_table <- stripped_data %>% 
