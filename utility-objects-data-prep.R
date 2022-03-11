@@ -1,6 +1,5 @@
-# A TEST CHANGE
-
 library(tidyverse)
+library(magrittr)
 
 #63111-0001:
 #Ausstattung privater Haushalte (Laufende
@@ -13,24 +12,22 @@ library(tidyverse)
 #I suspect there must be a difference between missing observations marked
 #with "-" and those marked with ".", but I did not find an explanation
 #therefore I am classing both cases as NA without differentiation
-haushalte <- read_csv2("63111-0001.csv", skip = 6, col_names = FALSE,
+full_data <- read_csv2("63111-0001.csv", skip = 6, col_names = FALSE,
                        locale = locale(encoding = "latin1"), na = c("-", "."))
 
-#remove info at the bottom
-plain_data <- slice(haushalte, 5:23) %>% 
-  X1 <- as.Date(plain_data$X1, format = "%d.%m.%Y")
+#remove info at the bottom, assign correct data types, transform "Erfasste Haushalte"
+stripped_data <- slice(full_data, 5:23) %>% 
+  mutate(X1 = as.Date(X1, format = "%d.%m.%Y")) %>% 
+  mutate(across(X2:X73, ~as.numeric(sub(",", ".", .x)))) %>% 
+  mutate(X3 = X3 * 1000)
   
-
 #create list of column names
 #I am integrating the unit % into the column names, but not integrating the 1000 factor
 #for the column "Erfasste Haushalte" since I am transforming this column back to full size values
-full_names <- c("Snapshot Date", haushalte[1,2:3], paste(haushalte[3,4:73], "[%]", sep = " "))
+name_list <- c("Snapshot Date", full_data[1,2:3], paste(full_data[3,4:73], "[%]", sep = " "))
 
+#clean table with column names
+final_table <- stripped_data %>% 
+  set_colnames(name_list)
 
-parse_date(plain_data[1], format = "%d.%m.%Y")
-plain_data
-
-is.character(plain_data$X1)
-typeof(plain_data[1])
-
-sapply(plain_data, class)
+write_csv(final_table, "utility_objects_private_households_clean.csv")
