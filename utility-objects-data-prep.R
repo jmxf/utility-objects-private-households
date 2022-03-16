@@ -35,4 +35,5 @@ name_list <- name_list %>%
 final_table <- stripped_data %>% 
   set_colnames(name_list)
 
-write_csv(final_table, "utility_objects_private_households_clean.csv")
+#export csv with NAs as empty to be more compatible with Tableau
+write_csv(final_table, "utility_objects_private_households_clean.csv", na = "")
