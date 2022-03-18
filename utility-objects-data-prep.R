@@ -9,9 +9,10 @@ library(magrittr)
 #https://www-genesis.destatis.de/genesis/online
 
 
-#I suspect there must be a difference between missing observations marked
-#with "-" and those marked with ".", but I did not find an explanation
-#therefore I am classing both cases as NA without differentiation
+#according to the documentation the two types of missing values mean the following
+#"-" nothing available [nichts vorhanden]
+#"."numeber value unknown or to be kept secret [Zahlenwert unbekannt oder geheimzuhalten]
+#here I am classing both cases as NA without differentiation
 full_data <- read_csv2("63111-0001.csv", skip = 6, col_names = FALSE,
                        locale = locale(encoding = "latin1"), na = c("-", "."))
 
